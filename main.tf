@@ -15,22 +15,21 @@ provider "google" {
 }
 
 
-
 resource "google_artifact_registry_repository" "my-repo" {
-  location      = "australia-southeast1"
-  repository_id = "frontend"
-  description   = "react frontend"
-  format        = "docker"
+  location = var.region
+  repository_id = "react-frontend"
+  description = "frontend for terraform practice"
+  format = "docker"
 }
 
 resource "google_cloud_run_v2_service" "default" {
   name     = "terraform-practice"
-  location = "australia-southeast1"
+  location = var.region
   client   = "terraform"
 
   template {
     containers {
-      image = "australia-southeast1-docker.pkg.dev/terraform-practice-400104/frontend/frontend:0.0.1"
+      image = "australia-southeast1-docker.pkg.dev/terraform-practice-400104/react-frontend:latest"
     }
   }
 }

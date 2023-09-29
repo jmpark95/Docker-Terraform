@@ -1,0 +1,49 @@
+services:
+   #  backend:
+   #     build:
+   #        context: backend
+   #        target: development
+   #     environment:
+   #        NODE_ENV: development
+   #     ports:
+   #        - 3000:3000
+   #     secrets:
+   #        - db-password
+   #     volumes:
+   #        - ./backend:/usr/src/backend
+   #     depends_on:
+   #        - mysql
+
+   #  mysql:
+   #     image: mysql:8.0.27
+   #     command: "--default-authentication-plugin=mysql_native_password"
+   #     restart: always
+   #     secrets:
+   #        - db-password
+   #     volumes:
+   #        - db-data:/var/lib/mysql
+   #     networks:
+   #        - private
+   #     environment:
+   #        - MYSQL_DATABASE=example
+   #        - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+
+   frontend:
+      build:
+         context: frontend
+         target: development
+      image: jmpark95/GCP-fullstack-frontend
+      ports:
+         - 5173:5173
+      volumes:
+         - ./frontend/src:/usr/src/app/frontend/src
+         - ./frontend/vite.config.js:/usr/src/app/frontend/vite.config.js
+         - ./frontend/index.html:/usr/src/app/frontend/index.html
+
+      # depends_on:
+      #    - backend
+# volumes:
+#    db-data:
+# secrets:
+#    db-password:
+#       file: db/password.txt

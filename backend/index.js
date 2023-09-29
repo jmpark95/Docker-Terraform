@@ -157,8 +157,4 @@ app.get("/feed", async (req, res) => {
    res.json(posts);
 });
 
-const server = app.listen(port, () =>
-   console.log(`
-  🚀 Server ready at: http://localhost:${port}
-  ⭐️ See sample requests: http://pris.ly/e/js/rest-express#3-using-the-rest-api`)
-);
+const server = app.listen(port, () => console.log(`🚀 Server ready at: http://localhost:${port}`));
