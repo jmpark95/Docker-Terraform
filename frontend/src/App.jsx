@@ -23,8 +23,8 @@ function App() {
 
    useEffect(() => {
       async function getAllUsers() {
-         const response = await UserService.getAllUsers();
-         setUsers(response.data);
+         const allUsers = await UserService.getAllUsers();
+         setUsers(allUsers);
       }
 
       getAllUsers();
@@ -34,8 +34,9 @@ function App() {
       <>
          {users.map((user) => (
             <div key={user.id}>
-               <div>name: {user.name}</div>
-               <div>email: {user.email}</div>
+               <div>id: {user.id}</div>
+               <div>name: {user.firstName}</div>
+               <div>lastname: {user.lastName}</div>
             </div>
          ))}
 
@@ -44,8 +45,6 @@ function App() {
             <input type="text" name="email" value={formInput.email} onChange={handleChange} placeholder="email" />
             <button type="submit">Submit</button>
          </form>
-
-         <h1>docker testing</h1>
       </>
    );
 }

@@ -1,47 +1,54 @@
 services:
-   #  backend:
-   #     build:
-   #        context: backend
-   #        target: development
-   #     environment:
-   #        NODE_ENV: development
-   #     ports:
-   #        - 3000:3000
-   #     secrets:
-   #        - db-password
-   #     volumes:
-   #        - ./backend:/usr/src/backend
-   #     depends_on:
-   #        - mysql
-
-   #  mysql:
-   #     image: mysql:8.0.27
-   #     command: "--default-authentication-plugin=mysql_native_password"
-   #     restart: always
-   #     secrets:
-   #        - db-password
-   #     volumes:
-   #        - db-data:/var/lib/mysql
-   #     networks:
-   #        - private
-   #     environment:
-   #        - MYSQL_DATABASE=example
-   #        - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
-
    frontend:
       build:
          context: frontend
          target: development
-      image: jmpark95/GCP-fullstack-frontend
+      image: jmpark95/gcp-fullstack-frontend
       ports:
          - 5173:5173
+      environment:
+         VITE_BACKEND_URL: http://localhost:3000
       volumes:
          - ./frontend/src:/usr/src/app/frontend/src
          - ./frontend/vite.config.js:/usr/src/app/frontend/vite.config.js
          - ./frontend/index.html:/usr/src/app/frontend/index.html
+      depends_on:
+         - backend
 
-      # depends_on:
-      #    - backend
+   backend:
+      build:
+         context: backend
+         target: development
+      image: jmpark95/gcp-fullstack-backend
+      environment:
+         FRONTEND_URL: "http://localhost:5173"
+      ports:
+         - 3000:3000
+      # secrets:
+      #    - db-password
+      volumes:
+         - ./backend/src:/usr/src/app/backend/src
+#       depends_on:
+#          - db
+
+#    db:
+#       image: mysql:8.0
+#       command: --default-authentication-plugin=mysql_native_password
+#       restart: always
+#       # secrets:
+#       #    - db-password
+#       volumes:
+#          - db-data:/var/lib/mysql
+#       # networks:
+#       #    - private
+#       ports:
+#          - 3307:3306
+#       environment:
+#          MYSQL_ROOT_PASSWORD: password
+#          MYSQL_DATABASE: typeorm
+#          MYSQL_USER: Min
+#          MYSQL_PASSWORD: Min123456
+#          # MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db-password
 # volumes:
 #    db-data:
 # secrets:

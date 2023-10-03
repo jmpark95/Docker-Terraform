@@ -1,11 +1,12 @@
-// import axios from "axios";
+import axios from "axios";
 
-// export const UserService = {
-//    getAllUsers: async () => {
-//       return await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users`);
-//    },
+export const UserService = {
+   getAllUsers: async () => {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users`);
+      return response.data;
+   },
 
-//    addUser: async (formInput) => {
-//       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, formInput);
-//    },
-// };
+   addUser: async (formInput) => {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, formInput);
+   },
+};
